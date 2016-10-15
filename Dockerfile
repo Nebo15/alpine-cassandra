@@ -50,12 +50,6 @@ RUN apk --update --no-cache add wget ca-certificates tar && \
     rm -r /tmp/apache-cassandra-${CASSANDRA_VERSION}-bin.tar.gz \
           /var/cache/apk/*
 
-# Setup entrypoint and bash to execute it
-COPY docker-entrypoint.sh /docker-entrypoint.sh
-RUN apk add --update --no-cache bash && \
-    chmod +x /docker-entrypoint.sh
-ENTRYPOINT ["/docker-entrypoint.sh"]
-
 # Add default config
 ADD cassandra.yaml ${CASSANDRA_CONFIG}/cassandra.yaml
 
@@ -72,6 +66,12 @@ RUN adduser -D -s /bin/sh ${CASSANDRA_USER} && \
 
 USER ${CASSANDRA_USER}
 WORKDIR ${CASSANDRA_HOME}
+
+# Setup entrypoint and bash to execute it
+COPY ./docker-entrypoint.sh /docker-entrypoint.sh
+RUN apk add --update --no-cache bash && \
+    chmod +x /docker-entrypoint.sh
+ENTRYPOINT ["/docker-entrypoint.sh"]
 
 # Expose data volume
 VOLUME ${CASSANDRA_DATA}
