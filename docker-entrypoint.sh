@@ -1,12 +1,12 @@
 #!/bin/bash
 set -e
 
-# first arg is `-f` or `--some-option`
+# First arg is `-f` or `--some-option`
 if [ "${1:0:1}" = '-' ]; then
   set -- ${CASSANDRA_USER} -f "$@"
 fi
 
-# allow the container to be started with `--user`
+# Allow the container to be started with `--user`
 if [ "$1" = 'cassandra' -a "$(id -u)" = '0' ]; then
   mkdir -p ${CASSANDRA_DATA} ${CASSANDRA_LOG}
   chown -R ${CASSANDRA_USER} ${CASSANDRA_DATA} ${CASSANDRA_CONFIG} ${CASSANDRA_LOG}

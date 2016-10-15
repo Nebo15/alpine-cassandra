@@ -51,16 +51,17 @@ RUN apk --update --no-cache add wget ca-certificates tar && \
           /var/cache/apk/*
 
 # Setup entrypoint and bash to execute it
-RUN apk add --update --no-cache bash
 COPY docker-entrypoint.sh /docker-entrypoint.sh
+RUN apk add --update --no-cache bash && \
+    chmod +x /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
 # Add default config
 ADD cassandra.yaml ${CASSANDRA_CONFIG}/cassandra.yaml
 
 # Change directories ownership and access rights
-RUN adduser -D -s /bin/sh ${CASSANDRA_USER}
-RUN chown -R ${CASSANDRA_USER}:${CASSANDRA_USER} ${CASSANDRA_HOME} \
+RUN adduser -D -s /bin/sh ${CASSANDRA_USER} && \
+    chown -R ${CASSANDRA_USER}:${CASSANDRA_USER} ${CASSANDRA_HOME} \
                                                  ${CASSANDRA_DATA} \
                                                  ${CASSANDRA_CONFIG} \
                                                  ${CASSANDRA_LOG} && \
