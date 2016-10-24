@@ -29,7 +29,7 @@ RUN set -x && \
     apk --purge del .gosu-deps
 
 # Install Cassandra
-ENV CASSANDRA_VERSION=3.9 \
+ENV CASSANDRA_VERSION=3.9.0 \
     CASSANDRA_HOME=/opt/cassandra \
     CASSANDRA_CONFIG=/etc/cassandra \
     CASSANDRA_DATA=/var/lib/cassandra/data \
@@ -43,11 +43,11 @@ RUN mkdir -p ${CASSANDRA_DATA} \
 
 ## Install it and reduce container size
 RUN apk --update --no-cache add wget ca-certificates tar && \
-    wget http://artfiles.org/apache.org/cassandra/${CASSANDRA_VERSION}/apache-cassandra-${CASSANDRA_VERSION}-bin.tar.gz -P /tmp && \
-    tar -xvzf /tmp/apache-cassandra-${CASSANDRA_VERSION}-bin.tar.gz -C /tmp/ && \
-    mv /tmp/apache-cassandra-${CASSANDRA_VERSION} ${CASSANDRA_HOME} && \
+    wget http://downloads.datastax.com/datastax-ddc/datastax-ddc-${CASSANDRA_VERSION}-bin.tar.gz -P /tmp && \
+    tar -xvzf /tmp/datastax-ddc-${CASSANDRA_VERSION}-bin.tar.gz -C /tmp/ && \
+    mv /tmp/datastax-ddc-${CASSANDRA_VERSION} ${CASSANDRA_HOME} && \
     apk --purge del wget ca-certificates tar && \
-    rm -r /tmp/apache-cassandra-${CASSANDRA_VERSION}-bin.tar.gz \
+    rm -r /tmp/datastax-ddc-${CASSANDRA_VERSION}-bin.tar.gz \
           /var/cache/apk/*
 
 # Setup entrypoint and bash to execute it
