@@ -8,8 +8,8 @@ fi
 
 # Allow the container to be started with `--user`
 if [ "$1" = 'cassandra' -a "$(id -u)" = '0' ]; then
-  mkdir -p ${CASSANDRA_DATA} ${CASSANDRA_LOG}
-  chown -R ${CASSANDRA_USER} ${CASSANDRA_DATA} ${CASSANDRA_CONFIG} ${CASSANDRA_LOG}
+  mkdir -p ${CASSANDRA_DATA} ${CASSANDRA_LOG} ${CASSANDRA_DATA} ${CASSANDRA_PERSIST_DIR} ${CASSANDRA_COMMITLOG}
+  chown -R ${CASSANDRA_USER} ${CASSANDRA_DATA} ${CASSANDRA_CONFIG} ${CASSANDRA_LOG} ${CASSANDRA_PERSIST_DIR}
   exec gosu ${CASSANDRA_USER} "$BASH_SOURCE" "$@"
 fi
 
