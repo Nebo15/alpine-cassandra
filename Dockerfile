@@ -45,7 +45,7 @@ RUN mkdir -p ${CASSANDRA_DATA} \
              ${CASSANDRA_COMMITLOG}
 
 ## Install it and reduce container size
-### DataStax Cassandra
+### DataStax Cassandra (notice that you will need to change ENV "CASSANDRA_VERSION")
 # RUN apk --update --no-cache add wget ca-certificates tar && \
 #     wget http://downloads.datastax.com/datastax-ddc/datastax-ddc-${CASSANDRA_VERSION}-bin.tar.gz -P /tmp && \
 #     tar -xvzf /tmp/datastax-ddc-${CASSANDRA_VERSION}-bin.tar.gz -C /tmp/ && \
